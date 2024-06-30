@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:ESP32GyroscopeApp"
+             x:Class="ESP32GyroscopeApp.MainPage">
+
+    <ContentPage.Resources>
+        <Style TargetType="Border">
+            <Setter Property="StrokeThickness" Value="0"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout VerticalOptions="Center"
+                                 Spacing="15"
+                                 x:Name="parentViewGyroscope">
+                <Label x:Name="testTest"
+                       HorizontalOptions="Center"
+                       Grid.Row="0"
+                       FontSize="60"
+                       VerticalOptions="End"
+                       FontAttributes="Bold"/>
+                <Frame HorizontalOptions="Center"
+                       VerticalOptions="Start"
+                       Padding="0"
+                       BorderColor="#00000000"
+                       Grid.Row="1">
+                    <Grid x:Name="layoutViewGyroscope">
+                        <Image Source="gyroscope_layer.png"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Fill"/>
+                        <AbsoluteLayout HorizontalOptions="Fill"
+                                        VerticalOptions="Fill">
+                            <Ellipse x:Name="pointGyroscope" Background="Red" Opacity="0.9"/>
+                        </AbsoluteLayout>
+                    </Grid>
+                </Frame>
+                <VerticalStackLayout Grid.Row="2"
+                                     Spacing="15"
+                                     Margin="20">
+                    <Button Text="Сбросить в начало" Clicked="ResetClicked"/>
+                    <Button Text="Калибровка" Clicked="CalibrationClicked"/>
+                    <Button Text="Выбрать другое устройство" Clicked="SwitchDeviceClicked"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+
+        <Grid x:Name="popupSelectDevice" Loaded="popupSelectDevice_Loaded">
+            <Border Background="Black" Opacity="0.5"/>
+            <Frame Margin="20,80"
+                   Background="White"
+                   Padding="10"
+                   CornerRadius="10">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ScrollView>
+                        <VerticalStackLayout Spacing="20"
+                                         VerticalOptions="Fill">
+                            <ListView x:Name="viewsDevices"
+                                      ItemSelected="DeviceSelected">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <VerticalStackLayout Background="#44C5D0E6">
+                                                <Label Text="{Binding Name}"
+                                                       TextColor="Black"
+                                                       FontSize="20"
+                                                       FontAttributes="Bold"/>
+                                                <Label Text="{Binding Address}"
+                                                       TextColor="Black"/>
+                                            </VerticalStackLayout>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </VerticalStackLayout>
+                    </ScrollView>
+                    <Button x:Name="refreshButton"
+                            Clicked="RefreshButtonClicked"
+                            Text="Обновить список"
+                            Grid.Row="1"/>
+                </Grid>
+            </Frame>
+        </Grid>
+    </Grid>
+</ContentPage>
